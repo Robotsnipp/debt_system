@@ -1,0 +1,21 @@
+﻿@page
+@model DebtSystem.Pages.Debts.DeleteModel
+@{
+    ViewData["Title"] = "Удалить долг";
+}
+
+<h2>Удалить долг</h2>
+
+<h4>Вы уверены, что хотите удалить этот долг?</h4>
+<div>
+    <p><strong>Должник:</strong> @Model.Debt?.Debtor?.FullName</p>
+    <p><strong>Кредитор:</strong> @Model.Debt?.Creditor?.FullName</p>
+    <p><strong>Сумма:</strong> @Model.Debt?.Amount.ToString("C")</p>
+    <p><strong>Остаток:</strong> @Model.Debt?.RemainingAmount.ToString("C")</p>
+
+    <form method="post">
+        <input type="hidden" name="id" value="@Model.Debt?.Id" />
+        <button type="submit" class="btn btn-danger">Удалить</button>
+        <a asp-page="./Index" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>

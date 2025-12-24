@@ -1,0 +1,147 @@
+﻿@page
+@model DebtSystem.Pages.Receipts.DetailsModel
+@{
+    ViewData["Title"] = "Квитанция";
+    Layout = "_Layout";
+}
+
+<style>
+    .receipt {
+        max-width: 800px;
+        margin: 30px auto;
+        padding: 2rem;
+        border: 2px solid #000;
+        background: #f9f9f9;
+        font-family: 'Courier New', monospace;
+    }
+
+    .receipt-header {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+        .receipt-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+        }
+
+    .receipt-line {
+        display: flex;
+        justify-content: space-between;
+        margin: 0.5rem 0;
+    }
+
+    .receipt-total {
+        font-weight: bold;
+        border-top: 1px dashed #000;
+        padding-top: 10px;
+        margin-top: 10px;
+    }
+
+    .receipt-footer {
+        margin-top: 2rem;
+        text-align: center;
+        font-size: 0.9rem;
+        color: #555;
+    }
+
+    /* Скрываем кнопки при печати */
+    @@media print {
+        .no-print
+
+    {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+        color: black;
+    }
+
+    .receipt {
+        box-shadow: none;
+        border: 1px solid black;
+    }
+
+    }
+</style>
+
+<div class="receipt">
+    <div class="receipt-header">
+        <h2>Квитанция по долгу</h2>
+        <p>Система управления долгами — DebtSystem</p>
+    </div>
+
+    @if (Model.Debt != null)
+    {
+        <div class="receipt-line">
+            <span>Должник:</span>
+            <span><strong>@Model.Debt.Debtor?.FullName</strong></span>
+        </div>
+        <div class="receipt-line">
+            <span>Кредитор:</span>
+            <span><strong>@Model.Debt.Creditor?.FullName</strong></span>
+        </div>
+        <div class="receipt-line">
+            <span>Категория:</span>
+            <span>@Model.Debt.Category?.Name</span>
+        </div>
+        <div class="receipt-line">
+            <span>Дата выдачи:</span>
+            <span>@Model.Debt.IssueDate.ToString("dd.MM.yyyy")</span>
+        </div>
+        <div class="receipt-line">
+            <span>Срок погашения:</span>
+            <span>@(Model.Debt.DueDate?.ToString("dd.MM.yyyy") ?? "Не задан")</span>
+        </div>
+
+        <hr style="margin: 15px 0;">
+
+        <div class="receipt-line">
+            <span>Сумма долга:</span>
+            <span>@Model.Debt.Amount.ToString("C")</span>
+        </div>
+        <div class="receipt-line">
+            <span>Остаток к оплате:</span>
+            <span>@Model.Debt.RemainingAmount.ToString("C")</span>
+        </div>
+        <div class="receipt-line">
+            <span>Штраф за просрочку:</span>
+            <span>@Model.Debt.CalculatePenalty().ToString("C")</span>
+        </div>
+
+        <div class="receipt-line receipt-total">
+            <span>ИТОГО К ОПЛАТЕ:</span>
+            <span>@(Model.Debt.RemainingAmount + Model.Debt.CalculatePenalty().ToString("C"))</span>
+        </div>
+
+        <div class="receipt-line" style="margin-top: 20px;">
+            <span>Статус:</span>
+            <span><strong>@(Model.Debt.IsPaid ? "ПОГАШЕН" : "ТРЕБУЕТСЯ ОПЛАТА")</strong></span>
+        </div>
+
+        <div class="receipt-footer">
+            <p>Квитанция сформирована автоматически. Действительна без подписи.</p>
+            <p>Дата формирования: @DateTime.Now.ToString("dd.MM.yyyy HH:mm")</p>
+        </div>
+    }
+
+    <div class="no-print" style="text-align: center; margin-top: 20px;">
+        <a href="javascript:window.print()" class="btn btn-outline-secondary">Распечатать</a>
+        <a asp-page="/Debts/Index" class="btn btn-primary">Назад к долгам</a>
+    </div>
+</div>
+@* @if (Model.Debt?.Payments.Any() == true)
+{
+    <div class="receipt-line" style="margin-top: 15px; border-top: 1px dashed #999; padding-top: 10px;">
+        <strong>Выплаты:</strong>
+    </div>
+    @foreach (var p in Model.Debt.Payments.OrderBy(p => p.PaymentDate))
+    {
+        <div class="receipt-line">
+            <span>@p.PaymentDate.ToString("dd.MM.yyyy")</span>
+            <span>-@p.Amount.ToString("C")</span>
+        </div>
+    }
+} *@

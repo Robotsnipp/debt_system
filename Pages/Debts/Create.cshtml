@@ -1,0 +1,58 @@
+﻿@page
+@model DebtSystem.Pages.Debts.CreateModel
+@{
+    ViewData["Title"] = "Добавить долг";
+}
+
+<h2>Добавить новый долг</h2>
+
+<form method="post">
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="Debt.DebtorId" class="form-label">Должник</label>
+            <select asp-for="Debt.DebtorId" class="form-control" required>
+                <option value="">-- Выберите --</option>
+                @foreach (var d in Model.Debtors)
+                {
+                    <option value="@d.Id">@d.FullName</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Debt.CreditorId" class="form-label">Кредитор</label>
+            <select asp-for="Debt.CreditorId" class="form-control" required>
+                <option value="">-- Выберите --</option>
+                @foreach (var c in Model.Creditors)
+                {
+                    <option value="@c.Id">@c.FullName</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="Debt.CategoryId" class="form-label">Категория</label>
+            <select asp-for="Debt.CategoryId" class="form-control" required>
+                <option value="">-- Выберите --</option>
+                @foreach (var cat in Model.Categories)
+                {
+                    <option value="@cat.Id">@cat.Name</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Debt.Amount" class="form-label">Сумма долга (руб.)</label>
+            <input asp-for="Debt.Amount" class="form-control" type="number" step="0.01" min="0.01" required />
+            <span asp-validation-for="Debt.Amount" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Debt.DueDate" class="form-label">Срок погашения (опционально)</label>
+        <input asp-for="Debt.DueDate" class="form-control" type="date" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Создать долг</button>
+    <a asp-page="./Index" class="btn btn-secondary">Отмена</a>
+</form>

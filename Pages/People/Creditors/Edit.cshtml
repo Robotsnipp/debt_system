@@ -1,0 +1,32 @@
+﻿@page
+@model DebtSystem.Pages.People.Creditors.EditModel
+@{
+    ViewData["Title"] = "Редактировать кредитора";
+}
+
+<h2>Изменить данные кредитора</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Creditor.Id" />
+
+    <div class="form-group mb-3">
+        <label asp-for="Creditor.FirstName" class="form-label">Имя</label>
+        <input asp-for="Creditor.FirstName" class="form-control" />
+        <span asp-validation-for="Creditor.FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Creditor.LastName" class="form-label">Фамилия</label>
+        <input asp-for="Creditor.LastName" class="form-control" />
+        <span asp-validation-for="Creditor.LastName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Creditor.Email" class="form-label">Email</label>
+        <input asp-for="Creditor.Email" class="form-control" />
+        <span asp-validation-for="Creditor.Email" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a asp-page="./Index" class="btn btn-secondary">Отмена</a>
+</form>

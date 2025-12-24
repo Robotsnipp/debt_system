@@ -1,0 +1,41 @@
+﻿@page
+@model DebtSystem.Pages.Dashboard.IndexModel
+@{
+    ViewData["Title"] = "Панель управления — Система долгов";
+}
+
+<div class="container py-4">
+    <h1 class="mb-4">Система управления долгами</h1>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card border-primary h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">Долги</h5>
+                    <p class="card-text">Просмотр, добавление и удаление долгов.</p>
+                    <a asp-page="/Debts/Index" class="btn btn-primary">Перейти</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-success h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-success">Должники</h5>
+                    <p class="card-text">Управление списком должников.</p>
+                    <a asp-page="/People/Debtors/Index" class="btn btn-success">Перейти</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-warning h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-warning">Кредиторы</h5>
+                    <p class="card-text">Управление списком кредиторов.</p>
+                    <a asp-page="/People/Creditors/Index" class="btn btn-warning">Перейти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+﻿@page
+@model DebtSystem.Pages.Payments.CreateModel
+@{
+    ViewData["Title"] = "Добавить выплату";
+}
+
+<h2>Выплата по долгу</h2>
+
+@if (Model.Debt != null)
+{
+    <div class="alert alert-info">
+        <p><strong>Должник:</strong> @Model.Debt.Debtor?.FullName</p>
+        <p><strong>Кредитор:</strong> @Model.Debt.Creditor?.FullName</p>
+        <p><strong>Остаток долга:</strong> @Model.Debt.RemainingAmount.ToString("C")</p>
+    </div>
+
+    <form method="post">
+        <input type="hidden" asp-for="Payment.DebtId" />
+
+        <div class="mb-3">
+            <label asp-for="Payment.Amount" class="form-label">Сумма выплаты</label>
+            <input asp-for="Payment.Amount" class="form-control" type="number" step="0.01" min="0.01"
+                   max="@Model.Debt.RemainingAmount" required />
+            <div class="form-text">Максимум: @Model.Debt.RemainingAmount.ToString("C")</div>
+            <span asp-validation-for="Payment.Amount" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Payment.PaymentDate" class="form-label">Дата выплаты</label>
+            <input asp-for="Payment.PaymentDate" class="form-control" type="datetime-local" />
+        </div>
+
+        <button type="submit" class="btn btn-success">Зарегистрировать выплату</button>
+        <a asp-page="/Debts/Index" class="btn btn-secondary">Отмена</a>
+    </form>
+}
