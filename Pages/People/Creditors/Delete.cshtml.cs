@@ -34,8 +34,6 @@ public class DeleteModel : PageModel
 
         var creditor = await _context.Creditors.FindAsync(id);
         if (creditor == null) return NotFound();
-
-        // ѕроверка: есть ли долги, св€занные с этим кредитором?
         bool hasDebts = await _context.Debts.AnyAsync(d => d.CreditorId == id);
         if (hasDebts)
         {

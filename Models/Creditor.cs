@@ -1,8 +1,5 @@
 ﻿namespace DebtSystem.Models;
 
-/// <summary>
-/// Класс кредитора — наследуется от Person.
-/// </summary>
 public class Creditor : Person
 {
     public Creditor() { }

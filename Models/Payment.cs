@@ -7,7 +7,7 @@ public class Payment
 {
     public int Id { get; set; }
     public int DebtId { get; set; }
-    public Debt Debt { get; set; } = null!; // required
+    public Debt Debt { get; set; } = null!;
 
     private decimal _amount;
     public decimal Amount
@@ -18,5 +18,5 @@ public class Payment
             : throw new ArgumentException("Сумма выплаты должна быть положительной.");
     }
 
-    public DateTime PaymentDate { get; set; } = DateTime.UtcNow;
+    public DateTime PaymentDate { get; set; } = DateTime.Now;
 }

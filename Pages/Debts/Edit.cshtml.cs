@@ -1,4 +1,3 @@
-// Pages/Debts/Edit.cshtml.cs
 using DebtSystem.Data;
 using DebtSystem.Models;
 using Microsoft.AspNetCore.Mvc;

@@ -78,6 +78,9 @@ namespace DebtSystem.Migrations
                     b.Property<DateTime>("IssueDate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<decimal>("RemainingAmount")
+                        .HasColumnType("numeric");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -226,17 +229,12 @@ namespace DebtSystem.Migrations
             modelBuilder.Entity("DebtSystem.Models.Payment", b =>
                 {
                     b.HasOne("DebtSystem.Models.Debt", "Debt")
-                        .WithMany("Payments")
+                        .WithMany()
                         .HasForeignKey("DebtId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Debt");
-                });
-
-            modelBuilder.Entity("DebtSystem.Models.Debt", b =>
-                {
-                    b.Navigation("Payments");
                 });
 #pragma warning restore 612, 618
         }

@@ -19,32 +19,27 @@ public abstract class Debt
     public DebtCategory? Category { get; set; }
 
     private decimal _amount;
-    private decimal _remainingAmount;
-
     public decimal Amount
     {
         get => _amount;
-        set => _amount = value <= 0
+        set => _amount = value < 0
             ? throw new ArgumentException("Сумма долга должна быть положительной.")
             : value;
     }
 
-    public decimal RemainingAmount
-    {
-        get => _remainingAmount;
-        set => _remainingAmount = value < 0
-            ? throw new ArgumentException("Остаток не может быть отрицательным.")
-            : value;
-    }
+    public decimal RemainingAmount { get; set; }
 
     public DateTime IssueDate { get; set; } = DateTime.Now;
     public DateTime? DueDate { get; set; }
 
-    public bool IsPaid => RemainingAmount == 0;
+    public bool IsPaid => _amount == 0;
 
     public abstract decimal CalculatePenalty();
 
-    protected Debt() { }
+    protected Debt()
+    {
+        RemainingAmount = Amount;
+    }
 
     protected Debt(decimal amount, DateTime? dueDate = null)
     {
@@ -65,10 +60,10 @@ public class PersonalLoanDebt : Debt
 
     public override decimal CalculatePenalty()
     {
-        if (!DueDate.HasValue || DateTime.UtcNow <= DueDate.Value)
+        if (!DueDate.HasValue || DateTime.Now <= DueDate.Value)
             return 0;
 
-        var daysLate = (DateTime.UtcNow - DueDate.Value).TotalDays;
+        var daysLate = (DateTime.Now - DueDate.Value).TotalDays;
         if (daysLate <= 0) return 0;
 
         var monthsLate = (int)Math.Ceiling(daysLate / 30);

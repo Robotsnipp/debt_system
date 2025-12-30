@@ -36,7 +36,6 @@ public class DeleteModel : PageModel
         var debtor = await _context.Debtors.FindAsync(id);
         if (debtor == null) return NotFound();
 
-        // Проверка: есть ли долги, привязанные к этому должнику?
         bool hasDebts = await _context.Debts.AnyAsync(d => d.DebtorId == id);
         if (hasDebts)
         {

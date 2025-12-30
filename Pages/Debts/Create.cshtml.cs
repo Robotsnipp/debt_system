@@ -57,7 +57,7 @@ public class CreateModel : PageModel
                 return Page();
             }
 
-            //Debt.RemainingAmount = Debt.Amount;
+            Debt.RemainingAmount = Debt.Amount;
 
             _context.Debts.Add(Debt);
             await _context.SaveChangesAsync();

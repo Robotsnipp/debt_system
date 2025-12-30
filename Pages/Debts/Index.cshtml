@@ -18,7 +18,7 @@
                 <th>Должник</th>
                 <th>Кредитор</th>
                 <th>Категория</th>
-                <th>Сумма</th>
+                @* <th>Сумма</th> *@
                 <th>Осталось</th>
                 <th>Срок</th>
                 <th>Штраф</th>
@@ -34,16 +34,12 @@
                     <td>@d.Creditor?.FullName</td>
                     <td>@d.Category?.Name</td>
                     <td>@d.Amount.ToString("C")</td>
-                    <td>@d.RemainingAmount.ToString("C")</td>
+                    @* <td>@d.RemainingAmount.ToString("C")</td> *@
                     <td>@(d.DueDate?.ToString("dd.MM.yyyy") ?? "—")</td>
                     <td>@(d.CalculatePenalty().ToString("C"))</td>
                     <td>@(d.IsPaid ? "Погашен" : "Активен")</td>
                     <td>
-                        @if (!d.IsPaid)
-                        {
-                            <a asp-page="/Payments/Create" asp-route-debtId="@d.Id" class="btn btn-sm btn-success">Выплата</a>
-                        }
-                        <a asp-page="/Receipts/Details" asp-route-id="@d.Id" class="btn btn-sm btn-info">Квитанция</a>
+                        <a asp-page="/Receipts/Details" asp-route-id="@d.Id" class="btn btn-sm btn-outline-info">Квитанция</a>
                         <a asp-page="Edit" asp-route-id="@d.Id" class="btn btn-sm btn-outline-secondary">Изменить</a>
                         <a asp-page="Delete" asp-route-id="@d.Id" class="btn btn-sm btn-outline-danger">Удалить</a>
                     </td>

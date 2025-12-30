@@ -1,4 +1,3 @@
-
 using DebtSystem.Data;
 using DebtSystem.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
